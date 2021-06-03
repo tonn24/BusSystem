@@ -13,7 +13,7 @@ public class Bus {
   private Long id;
   private String busNumber;
   private String registryNumber;
-  private Integer AmountOfSeats;
+  private Integer amountOfSeats;
   private Double pricePerKilometre;
   private Integer routeLength;
 

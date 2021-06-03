@@ -1,6 +1,6 @@
 package com.example.demo.controllers;
 
-import com.example.demo.domain.CreatePassengerRequest;
+import com.example.demo.domain.create_requests.CreatePassengerRequest;
 import com.example.demo.domain.Passenger;
 import com.example.demo.service.PassengerService;
 import java.util.List;

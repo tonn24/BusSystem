@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BoxOffice {
+public class Ticket {
 
   private Long id;
   private Long passengerId;

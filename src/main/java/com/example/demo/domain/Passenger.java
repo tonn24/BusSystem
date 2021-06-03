@@ -12,5 +12,4 @@ public class Passenger {
   private long id;
   private String idCode;
   private Double money;
-
 }

@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.CreatePassengerRequest;
+import com.example.demo.domain.create_requests.CreatePassengerRequest;
 import com.example.demo.domain.Passenger;
 import com.example.demo.repository.PassengerRepository;
 import java.util.List;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 public class PassengerService {
 
   private final PassengerRepository passengerRepository;
-
 
   public Passenger createPassenger(CreatePassengerRequest request) {
     Long busId = passengerRepository.createPassenger(request);

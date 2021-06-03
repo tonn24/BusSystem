@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.Bus;
-import com.example.demo.domain.CreateBusRequest;
+import com.example.demo.domain.create_requests.CreateBusRequest;
 import com.example.demo.repository.BusRepository;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,6 @@ public class BusService {
 
   public Bus findBusById(Long id) {
     return busRepository.getBusById(id);
-
   }
 
   public Bus createBus(CreateBusRequest request) {
@@ -31,5 +30,9 @@ public class BusService {
 
   public void deleteBus(Long id) {
     busRepository.deleteBus(id);
+  }
+
+  public Double getTicketPrice(Double pricePerKilometre, Integer routeLength) {
+    return pricePerKilometre * routeLength;
   }
 }

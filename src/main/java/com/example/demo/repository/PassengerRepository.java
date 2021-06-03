@@ -1,8 +1,8 @@
 package com.example.demo.repository;
 
-import com.example.demo.domain.CreatePassengerRequest;
+import com.example.demo.domain.create_requests.CreatePassengerRequest;
 import com.example.demo.domain.Passenger;
-import com.example.demo.repository.rowMappers.PassengerRowMapper;
+import com.example.demo.repository.row_mappers.PassengerRowMapper;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -41,5 +41,10 @@ public class PassengerRepository {
     String sql = "Select * from passenger";
 
     return jdbcTemplate.query(sql, new PassengerRowMapper());
+  }
+
+  public void updatePassenger(Long passengerId) {
+    String sql = "update passenger where id = ?";
+    jdbcTemplate.update(sql, passengerId);
   }
 }

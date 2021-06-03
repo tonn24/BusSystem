@@ -1,9 +1,8 @@
 package com.example.demo.controllers;
 
-
-import com.example.demo.domain.Bus;
-import com.example.demo.domain.create_requests.CreateBusRequest;
-import com.example.demo.service.BusService;
+import com.example.demo.domain.Ticket;
+import com.example.demo.domain.create_requests.CreateTicketRequest;
+import com.example.demo.service.TicketService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,36 +16,33 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("bus")
 @RequiredArgsConstructor
-public class BusController {
+@RequestMapping("box_office")
+public class TicketController {
 
-  private final BusService busService;
+  private final TicketService ticketService;
 
-  @GetMapping(value = "/{id}")
+  @GetMapping("/{id}")
   @ResponseBody
-  public Bus getBus(@PathVariable Long id) {
-    return busService.findBusById(id);
+  public Ticket getTicketById(@PathVariable Long id) {
+    return ticketService.getTicketById(id);
   }
 
   @PutMapping("")
-  public Bus createBus(@RequestBody CreateBusRequest request) {
-    return busService.createBus(request);
+  public Ticket buyTicket(@RequestBody Ticket request) {
+    return ticketService.buyTicket(request);
   }
 
-  @PostMapping("")
-  public Bus createPostBus(@RequestBody CreateBusRequest request) {
-    return busService.createBus(request);
-  }
-
-  @GetMapping(value = "/")
-  public List<Bus> getAllBuses() {
-    return busService.findAll();
+  @GetMapping("/")
+  @ResponseBody
+  public List<Ticket> getAllTickets() {
+    return ticketService.getAllTickets();
   }
 
   @DeleteMapping("/{id}")
-  public void deleteBusById(@PathVariable Long id) {
-    busService.deleteBus(id);
+  public void deleteTicketById(@PathVariable Long id) {
+    ticketService.deleteTicketById(id);
   }
+
 
 }

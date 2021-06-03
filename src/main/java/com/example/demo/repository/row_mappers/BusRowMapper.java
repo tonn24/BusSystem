@@ -1,4 +1,4 @@
-package com.example.demo.repository.rowMappers;
+package com.example.demo.repository.row_mappers;
 
 import com.example.demo.domain.Bus;
 import java.sql.ResultSet;

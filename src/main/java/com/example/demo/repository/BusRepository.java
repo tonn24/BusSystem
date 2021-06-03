@@ -1,8 +1,8 @@
 package com.example.demo.repository;
 
 import com.example.demo.domain.Bus;
-import com.example.demo.domain.CreateBusRequest;
-import com.example.demo.repository.rowMappers.BusRowMapper;
+import com.example.demo.domain.create_requests.CreateBusRequest;
+import com.example.demo.repository.row_mappers.BusRowMapper;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
