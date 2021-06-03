@@ -22,10 +22,13 @@ public class BusRepository {
   }
 
   public Long createBus(CreateBusRequest request) {
-    String sql = "insert into bus(bus_number, registry_number, amount_of_seats, price_per_kilometre,  route_length)"
-        + " values(?, ?, ?, ?, ?) returning id";
+    String sql =
+        "insert into bus(bus_number, registry_number, amount_of_seats, price_per_kilometre,  route_length)"
+            + " values(?, ?, ?, ?, ?) returning id";
 
-    return jdbcTemplate.queryForObject(sql, Long.class, request.getBusNumber(), request.getRegistryNumber(), request.getAmountOfSeats(), request.getPricePerKilometre(), request.getRouteLength());
+    return jdbcTemplate
+        .queryForObject(sql, Long.class, request.getBusNumber(), request.getRegistryNumber(),
+            request.getAmountOfSeats(), request.getPricePerKilometre(), request.getRouteLength());
   }
 
   public List<Bus> findAllBuses() {
@@ -42,5 +45,11 @@ public class BusRepository {
     jdbcTemplate.update(sql, id);
 
     System.out.println("Bus with an id of " + id + " is deleted");
+  }
+
+  public void removeSeatFromBus(Long busId, Integer amountOfSeats) {
+    String sql = "update bus set amount_of_seats = ?  where id = ?";
+
+    jdbcTemplate.update(sql, amountOfSeats, busId);
   }
 }

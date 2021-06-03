@@ -40,26 +40,28 @@ public class TicketService {
   }
 
   public Ticket buyTicket(Long busId, Long passengerId) {
-    Bus findBusById = busRepository.getBusById(busId);
+    Bus bus = busRepository.getBusById(busId);
 
     Passenger passenger = passengerRepository.getPassengerId(passengerId);
 
     Double ticketPrice = busService
-        .getTicketPrice(findBusById.getPricePerKilometre(), findBusById.getRouteLength());
+        .getTicketPrice(bus.getPricePerKilometre(), bus.getRouteLength());
 
     Ticket ticket = new Ticket(null, passengerId, busId, ticketPrice, null);
 
-    if(passenger.getMoney() >= ticketPrice) {
-      passenger.setMoney(passenger.getMoney() - ticketPrice);
+    if(passenger.getMoney() >= ticketPrice && bus.getAmountOfSeats() > 0) {
 
+      bus.setAmountOfSeats(bus.getAmountOfSeats() - 1);
+      busRepository.removeSeatFromBus(busId, bus.getAmountOfSeats());
+
+      passenger.setMoney(passenger.getMoney() - ticketPrice);
       passengerRepository.updatePassenger(passengerId, passenger.getMoney());
 
       ticketRepository.createTicket(ticket);
     } else {
-      System.out.println("Passenger doesn't have enough money");
+      System.out.println("Passenger doesn't have enough money or not enough seats left in the bus");
     }
 
-    //busService.removeSeatFromBus(findBusById);
 
     return ticketRepository
           .getTicketPassengerIdAndBusId(ticket.getPassengerId(), ticket.getBusId(), ticket.getId());

@@ -33,10 +33,10 @@ public class BusService {
   }
 
   public Double getTicketPrice(Double pricePerKilometre, Integer routeLength) {
-    return Math.round(pricePerKilometre * routeLength);
+    return pricePerKilometre * routeLength;
   }
 
-  //public void removeSeatFromBus(Bus findBusById) {
-    //busRepository.removeSeatfromBus(findBusById);
-  //}
+  public void removeSeatFromBus(Long busId, Integer amountOfSeats) {
+    busRepository.removeSeatFromBus(busId, amountOfSeats);
+  }
 }
