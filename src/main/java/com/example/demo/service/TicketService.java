@@ -49,19 +49,21 @@ public class TicketService {
 
     Ticket ticket = new Ticket(null, passengerId, busId, ticketPrice, null);
 
-    //if passenger has enough money
     if(passenger.getMoney() >= ticketPrice) {
       passenger.setMoney(passenger.getMoney() - ticketPrice);
+
+      passengerRepository.updatePassenger(passengerId, passenger.getMoney());
+
+      ticketRepository.createTicket(ticket);
     } else {
       System.out.println("Passenger doesn't have enough money");
     }
 
-    //passenger repository updatePassenger
-    passengerRepository.updatePassenger(passengerId);
+    //busService.removeSeatFromBus(findBusById);
 
-    ticketRepository.createTicket(ticket);
+    return ticketRepository
+          .getTicketPassengerIdAndBusId(ticket.getPassengerId(), ticket.getBusId(), ticket.getId());
 
-    return ticket;
   }
 
 

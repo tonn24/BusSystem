@@ -43,8 +43,8 @@ public class PassengerRepository {
     return jdbcTemplate.query(sql, new PassengerRowMapper());
   }
 
-  public void updatePassenger(Long passengerId) {
-    String sql = "update passenger where id = ?";
-    jdbcTemplate.update(sql, passengerId);
+  public void updatePassenger(Long passengerId, Double money) {
+    String sql = "update passenger set free_money = ?  where id = ?";
+    jdbcTemplate.update(sql, money, passengerId);
   }
 }

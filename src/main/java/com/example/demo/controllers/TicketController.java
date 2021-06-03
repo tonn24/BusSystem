@@ -30,7 +30,7 @@ public class TicketController {
 
   @PutMapping("")
   public Ticket buyTicket(@RequestBody Ticket request) {
-    return ticketService.buyTicket(request);
+    return ticketService.buyTicket(request.getBusId(), request.getPassengerId());
   }
 
   @GetMapping("/")
