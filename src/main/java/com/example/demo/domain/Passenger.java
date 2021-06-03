@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class Passenger {
 
   private long id;
-  private Long idCode;
+  private String idCode;
   private Double money;
 
 }

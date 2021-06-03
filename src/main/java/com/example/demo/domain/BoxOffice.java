@@ -1,6 +1,6 @@
 package com.example.demo.domain;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,8 +12,9 @@ import lombok.NoArgsConstructor;
 public class BoxOffice {
 
   private Long id;
-  private Long userId;
+  private Long passengerId;
+  private Long busId;
   private Double amount;
-  private Date timeOfPurchase;
+  private Timestamp timeOfPurchase;
 
 }

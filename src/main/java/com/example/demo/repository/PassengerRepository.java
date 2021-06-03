@@ -2,6 +2,8 @@ package com.example.demo.repository;
 
 import com.example.demo.domain.CreatePassengerRequest;
 import com.example.demo.domain.Passenger;
+import com.example.demo.repository.rowMappers.PassengerRowMapper;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -22,8 +24,22 @@ public class PassengerRepository {
 
   public Passenger getPassengerId(Long busId) {
     String sql = "select * from passenger where id = ?";
-    //RowMapper vaja siia teha!
-    return jdbcTemplate.query(sql, );
 
+    return jdbcTemplate.query(sql, new PassengerRowMapper(), busId)
+        .stream().findFirst().orElse(null);
+
+  }
+
+  public void deletePassengerById(Long id) {
+    String sql = "delete from passenger where id = ?";
+
+    jdbcTemplate.update(sql, id);
+  }
+
+  public List<Passenger> getAllPassengers() {
+
+    String sql = "Select * from passenger";
+
+    return jdbcTemplate.query(sql, new PassengerRowMapper());
   }
 }

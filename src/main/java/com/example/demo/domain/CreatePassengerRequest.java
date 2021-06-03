@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class CreatePassengerRequest {
 
-  private Long idCode;
+  private String idCode;
   private Double money;
 
 }

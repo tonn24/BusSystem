@@ -19,5 +19,6 @@ public class BusRowMapper implements RowMapper<Bus> {
     bus.setRouteLength(rs.getInt("route_length"));
 
     return bus;
+    }
+
   }
-}
