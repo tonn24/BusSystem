@@ -3,6 +3,8 @@ package com.example.demo.service;
 import com.example.demo.domain.Bus;
 import com.example.demo.domain.create_requests.CreateBusRequest;
 import com.example.demo.repository.BusRepository;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,11 +34,7 @@ public class BusService {
     busRepository.deleteBus(id);
   }
 
-  public Double getTicketPrice(Double pricePerKilometre, Integer routeLength) {
-    return pricePerKilometre * routeLength;
-  }
-
-  public void removeSeatFromBus(Long busId, Integer amountOfSeats) {
-    busRepository.removeSeatFromBus(busId, amountOfSeats);
+  public BigDecimal getTicketPrice(BigDecimal pricePerKilometre, Integer routeLength) {
+    return pricePerKilometre.multiply(new BigDecimal(routeLength)).round(new MathContext(0));
   }
 }

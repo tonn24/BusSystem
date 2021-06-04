@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
-import java.sql.Timestamp;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ public class Ticket {
   private Long id;
   private Long passengerId;
   private Long busId;
-  private Double amount;
-  private Timestamp timeOfPurchase;
+  private BigDecimal amount;
+  private LocalDateTime timeOfPurchase;
 
 }

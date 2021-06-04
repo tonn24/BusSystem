@@ -3,6 +3,7 @@ package com.example.demo.repository;
 import com.example.demo.domain.create_requests.CreatePassengerRequest;
 import com.example.demo.domain.Passenger;
 import com.example.demo.repository.row_mappers.PassengerRowMapper;
+import java.math.BigDecimal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -43,7 +44,7 @@ public class PassengerRepository {
     return jdbcTemplate.query(sql, new PassengerRowMapper());
   }
 
-  public void updatePassenger(Long passengerId, Double money) {
+  public void updatePassenger(Long passengerId, BigDecimal money) {
     String sql = "update passenger set free_money = ?  where id = ?";
     jdbcTemplate.update(sql, money, passengerId);
   }

@@ -13,8 +13,8 @@ public class TicketRowMapper implements RowMapper<Ticket> {
     ticket.setId(rs.getLong("id"));
     ticket.setPassengerId(rs.getLong("passenger_id"));
     ticket.setBusId(rs.getLong("bus_id"));
-    ticket.setAmount(rs.getDouble("purchase_amount"));
-    ticket.setTimeOfPurchase(rs.getTimestamp("purchase_date"));
+    ticket.setAmount(rs.getBigDecimal("purchase_amount"));
+    //ticket.setTimeOfPurchase(rs.getDate("purchase_date"));
 
     return ticket;
   }

@@ -1,8 +1,8 @@
 package com.example.demo.repository;
 
 import com.example.demo.domain.Ticket;
-import com.example.demo.domain.create_requests.CreateTicketRequest;
 import com.example.demo.repository.row_mappers.TicketRowMapper;
+import java.math.BigDecimal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -49,5 +49,39 @@ public class TicketRepository {
     String sql = "delete from box_office where id = ?";
 
     jdbcTemplate.update(sql, id);
+  }
+
+  public BigDecimal getSales() {
+    String sql = "select * from box_office";
+
+    List<Ticket> tickets = jdbcTemplate.query(sql, new TicketRowMapper());
+
+    BigDecimal sales = tickets.stream()
+        .map(Ticket::getAmount)
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+    return sales;
+  }
+
+
+  public BigDecimal getSalesByBus(Long busId) {
+    String sql = "select * from box_office where bus_id = ?";
+
+    List<Ticket> ticketsWithSpecificBusId = jdbcTemplate.query(sql, new TicketRowMapper(), busId);
+
+    BigDecimal salesByBus = ticketsWithSpecificBusId.stream()
+        .map(Ticket::getAmount)
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+    return salesByBus;
+  }
+
+  public Ticket returnMoneyToPassenger(Long id) {
+    String sql = "select * from box_office where id = ?";
+
+    Ticket ticket = jdbcTemplate.query(sql, new TicketRowMapper(), id)
+        .stream().findFirst().orElse(null);
+
+    return ticket;
   }
 }

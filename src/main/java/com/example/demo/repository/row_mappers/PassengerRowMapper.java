@@ -12,7 +12,7 @@ public class PassengerRowMapper implements RowMapper<Passenger> {
     Passenger passenger = new Passenger();
     passenger.setId(rs.getLong("id"));
     passenger.setIdCode(rs.getString("id_code"));
-    passenger.setMoney(rs.getDouble("free_money"));
+    passenger.setMoney(rs.getBigDecimal("free_money"));
 
 
     return passenger;
