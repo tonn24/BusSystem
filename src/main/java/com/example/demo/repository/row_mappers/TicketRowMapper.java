@@ -2,6 +2,7 @@ package com.example.demo.repository.row_mappers;
 import com.example.demo.domain.Ticket;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.ZoneId;
 import org.springframework.jdbc.core.RowMapper;
 
 public class TicketRowMapper implements RowMapper<Ticket> {
@@ -14,9 +15,10 @@ public class TicketRowMapper implements RowMapper<Ticket> {
     ticket.setPassengerId(rs.getLong("passenger_id"));
     ticket.setBusId(rs.getLong("bus_id"));
     ticket.setAmount(rs.getBigDecimal("purchase_amount"));
-    //ticket.setTimeOfPurchase(rs.getDate("purchase_date"));
+
+    //TODO Vaja teha DateTime LocalDateTime objektiks
+    ticket.setTimeOfPurchase(rs.getDate("purchase_date"));
 
     return ticket;
   }
-
 }

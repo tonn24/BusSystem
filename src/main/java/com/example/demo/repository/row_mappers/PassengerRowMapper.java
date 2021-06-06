@@ -14,8 +14,6 @@ public class PassengerRowMapper implements RowMapper<Passenger> {
     passenger.setIdCode(rs.getString("id_code"));
     passenger.setMoney(rs.getBigDecimal("free_money"));
 
-
     return passenger;
   }
-
 }

@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.domain.Bus;
 import com.example.demo.domain.create_requests.CreateBusRequest;
+import com.example.demo.exceptions.BusMissingAttributeException;
 import com.example.demo.repository.BusRepository;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -35,6 +36,10 @@ public class BusService {
   }
 
   public BigDecimal getTicketPrice(BigDecimal pricePerKilometre, Integer routeLength) {
-    return pricePerKilometre.multiply(new BigDecimal(routeLength)).round(new MathContext(0));
+
+    if(pricePerKilometre == null || routeLength == null) {
+      throw new BusMissingAttributeException();
+    }
+    return pricePerKilometre.multiply(new BigDecimal(routeLength)).round(new MathContext(3));
   }
 }

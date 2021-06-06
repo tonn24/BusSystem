@@ -41,6 +41,7 @@ public class PassengerService {
     BigDecimal amountToBeRepaid = ticket.getAmount().divide(new BigDecimal(2), 1, RoundingMode.CEILING);
 
     Passenger passenger = passengerRepository.getPassengerId(ticket.getPassengerId());
-    passengerRepository.updatePassenger(ticket.getPassengerId(), passenger.getMoney().add(amountToBeRepaid));
+    passenger.setMoney(passenger.getMoney().add(amountToBeRepaid));
+    passengerRepository.updatePassenger(passenger);
   }
 }

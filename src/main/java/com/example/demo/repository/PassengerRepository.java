@@ -15,7 +15,6 @@ public class PassengerRepository {
 
   private final JdbcTemplate jdbcTemplate;
 
-
   public Long createPassenger(CreatePassengerRequest request) {
     String sql = "insert into passenger(id_code, free_money)"
         + "values(?, ?) returning id";
@@ -28,7 +27,6 @@ public class PassengerRepository {
 
     return jdbcTemplate.query(sql, new PassengerRowMapper(), busId)
         .stream().findFirst().orElse(null);
-
   }
 
   public void deletePassengerById(Long id) {
@@ -44,8 +42,8 @@ public class PassengerRepository {
     return jdbcTemplate.query(sql, new PassengerRowMapper());
   }
 
-  public void updatePassenger(Long passengerId, BigDecimal money) {
-    String sql = "update passenger set free_money = ?  where id = ?";
-    jdbcTemplate.update(sql, money, passengerId);
+  public void updatePassenger(Passenger passenger) {
+    String sql = "update passenger set free_money = ?, id_code = ?  where id = ?";
+    jdbcTemplate.update(sql, passenger.getMoney(), passenger.getIdCode(), passenger.getId());
   }
 }

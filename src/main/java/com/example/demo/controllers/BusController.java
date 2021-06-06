@@ -34,11 +34,6 @@ public class BusController {
     return busService.createBus(request);
   }
 
-  @PostMapping("")
-  public Bus createPostBus(@RequestBody CreateBusRequest request) {
-    return busService.createBus(request);
-  }
-
   @GetMapping(value = "/")
   public List<Bus> getAllBuses() {
     return busService.findAll();
@@ -48,5 +43,4 @@ public class BusController {
   public void deleteBusById(@PathVariable Long id) {
     busService.deleteBus(id);
   }
-
 }

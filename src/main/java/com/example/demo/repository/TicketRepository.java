@@ -56,32 +56,19 @@ public class TicketRepository {
 
     List<Ticket> tickets = jdbcTemplate.query(sql, new TicketRowMapper());
 
-    BigDecimal sales = tickets.stream()
+    return tickets.stream()
         .map(Ticket::getAmount)
         .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-    return sales;
   }
 
-
+  //TODO on vaja teha eraldi controllerisse funktsioon, et kontrollida funktsiooni korrektsust
   public BigDecimal getSalesByBus(Long busId) {
     String sql = "select * from box_office where bus_id = ?";
 
     List<Ticket> ticketsWithSpecificBusId = jdbcTemplate.query(sql, new TicketRowMapper(), busId);
 
-    BigDecimal salesByBus = ticketsWithSpecificBusId.stream()
+    return ticketsWithSpecificBusId.stream()
         .map(Ticket::getAmount)
         .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-    return salesByBus;
-  }
-
-  public Ticket returnMoneyToPassenger(Long id) {
-    String sql = "select * from box_office where id = ?";
-
-    Ticket ticket = jdbcTemplate.query(sql, new TicketRowMapper(), id)
-        .stream().findFirst().orElse(null);
-
-    return ticket;
   }
 }

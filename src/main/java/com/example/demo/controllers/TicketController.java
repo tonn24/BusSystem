@@ -1,7 +1,7 @@
 package com.example.demo.controllers;
-
 import com.example.demo.domain.Ticket;
 import com.example.demo.service.TicketService;
+import java.math.BigDecimal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,10 +42,19 @@ public class TicketController {
     ticketService.deleteTicketById(id);
   }
 
-  //50% Raha tagastamine
+  //TODO 50% Raha tagastamine ühendada deleteMappinguga
   @GetMapping("/returnMoney/{id}")
   public void returnMoneyToPassenger(@PathVariable Long id) {
     ticketService.returnMoneyToPassenger(id);
   }
 
+  @GetMapping("/getSales/")
+  public BigDecimal getSales() {
+    return ticketService.getSales();
+  }
+
+  @GetMapping("/getSales/{id}")
+  public BigDecimal getSalesByBusId(@PathVariable Long id) {
+    return ticketService.getSalesByBusId(id);
+  }
 }

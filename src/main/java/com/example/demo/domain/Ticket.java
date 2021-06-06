@@ -1,11 +1,10 @@
 package com.example.demo.domain;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 @Data
 @AllArgsConstructor
@@ -16,6 +15,6 @@ public class Ticket {
   private Long passengerId;
   private Long busId;
   private BigDecimal amount;
-  private LocalDateTime timeOfPurchase;
-
+  //TODO: Vaja teha LocalDateTime-ks
+  private Date timeOfPurchase;
 }

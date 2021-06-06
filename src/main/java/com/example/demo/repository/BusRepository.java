@@ -31,12 +31,11 @@ public class BusRepository {
             request.getAmountOfSeats(), request.getPricePerKilometre(), request.getRouteLength());
   }
 
+  //TODO Joinida ticketi tabliga ja selle põhjal vaadata mitu ticketit on müüdud, et saada teada vabade kohtade arv.
   public List<Bus> findAllBuses() {
     String sql = "select * from bus";
 
-    return jdbcTemplate.query(
-        sql,
-        new BusRowMapper());
+    return jdbcTemplate.query(sql, new BusRowMapper());
   }
 
   public void deleteBus(Long id) {
@@ -47,6 +46,7 @@ public class BusRepository {
     System.out.println("Bus with an id of " + id + " is deleted");
   }
 
+  //TODO Võiks olla üldine update meetod
   public void removeSeatFromBus(Long busId, Integer amountOfSeats) {
     String sql = "update bus set amount_of_seats = ?  where id = ?";
 

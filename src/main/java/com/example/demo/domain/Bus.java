@@ -1,6 +1,4 @@
 package com.example.demo.domain;
-
-
 import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,5 +15,4 @@ public class Bus {
   private Integer amountOfSeats;
   private BigDecimal pricePerKilometre;
   private Integer routeLength;
-
 }

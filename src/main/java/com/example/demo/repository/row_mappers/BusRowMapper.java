@@ -1,5 +1,4 @@
 package com.example.demo.repository.row_mappers;
-
 import com.example.demo.domain.Bus;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +18,5 @@ public class BusRowMapper implements RowMapper<Bus> {
     bus.setRouteLength(rs.getInt("route_length"));
 
     return bus;
-    }
-
   }
+}
