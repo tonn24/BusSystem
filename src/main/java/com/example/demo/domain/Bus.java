@@ -15,4 +15,5 @@ public class Bus {
   private Integer amountOfSeats;
   private BigDecimal pricePerKilometre;
   private Integer routeLength;
+  private Integer freeAmountOfSeats;
 }

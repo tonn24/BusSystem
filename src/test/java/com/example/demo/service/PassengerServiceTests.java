@@ -16,7 +16,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PassengerServiceTests {
-  //TODO: Passenger klassi testid täitsa tegemata
 
   private static final Long passengerId = 2L;
 

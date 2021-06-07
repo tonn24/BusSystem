@@ -49,7 +49,7 @@ public class TicketServiceTests {
   @Mock
   List<Ticket> tickets;
 
-  private final Bus bus = new Bus(busId, "asd345", "asd34", 50, new BigDecimal(0.2), 10);
+  private final Bus bus = new Bus(busId, "asd345", "asd34", 50, new BigDecimal(0.2), 10, 0);
 
   @Test
   public void getTicketByIdMovesToTicketRepository() {
@@ -148,7 +148,7 @@ public class TicketServiceTests {
   //TODO
   @Test
   public void shouldReturnMoneyToPassenger() {
-    //when(ticketRepository.getTicketById(1L)).thenReturn(ticket);
+
   }
 
   @Test

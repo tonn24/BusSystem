@@ -11,8 +11,6 @@ import com.example.demo.repository.PassengerRepository;
 import com.example.demo.repository.TicketRepository;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.sql.Date;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -70,14 +68,13 @@ public class TicketService {
     passenger.setMoney(passenger.getMoney().subtract(ticketPrice));
     passengerRepository.updatePassenger(passenger);
 
-    Ticket ticket = new Ticket(null, passengerId, busId, ticketPrice, Date.from(Instant.now()));
+    Ticket ticket = new Ticket(null, passengerId, busId, ticketPrice, LocalDateTime.now());
     ticketRepository.createTicket(ticket);
 
     return ticketRepository
         .getTicketPassengerIdAndBusId(ticket.getPassengerId(), ticket.getBusId(), ticket.getId());
   }
 
-  //TODO controllerisse
   public BigDecimal getSales() {
     return ticketRepository.getSales().round(new MathContext(6));
   }

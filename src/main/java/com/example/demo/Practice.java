@@ -1,40 +1,31 @@
 package com.example.demo;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-import org.springframework.http.converter.json.GsonBuilderUtils;
 
 public class Practice {
 
   public static void main(String[] args) {
-    //Getting the current date
-    Date date = new Date();
-    //System.out.println("Date is: "+date);
-
-    //Getting the default zone id
-    ZoneId defaultZoneId = ZoneId.systemDefault();
-
-    //Converting the date to Instant
-    Instant instant = date.toInstant();
-
-    //Converting the Date to LocalDate
-    LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
-    //System.out.println(date);
-    //System.out.println("Local Date is: "+localDate);
-
-    Date dateToConvert = Date.from(Instant.now());
-
-    LocalDateTime date1 = dateToConvert.toInstant()
+    Date currentDate = new Date();
+    currentDate.toInstant()
         .atZone(ZoneId.systemDefault())
         .toLocalDateTime();
 
-    System.out.println(date1);
+    System.out.println(currentDate);
+    LocalDateTime localDateTime = Instant
+        .ofEpochMilli(currentDate.getTime())
+        .atZone(ZoneId.systemDefault())
+        .toLocalDateTime();
 
-    System.out.println(dateToConvert);
+    System.out.println("Locale date time is :" + localDateTime);
+
+    LocalDateTime localDateTime2 = currentDate
+        .toInstant()
+        .atZone(ZoneId.systemDefault())
+        .toLocalDateTime();
+
+    System.out.println("Locale date time is Options 2:" + localDateTime2);
   }
 }

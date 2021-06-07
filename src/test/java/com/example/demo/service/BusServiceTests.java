@@ -63,13 +63,13 @@ public class BusServiceTests {
   }
 
   @Test //TODO: Test on vaja lõpetada
-  public void deleteBusMovesToBusRepositoryTest() {
+  public void shouldDeleteBus() {
 
   }
 
   @Test
   //TODO Või hoopis should create bus?
-  public void createBusShouldMoveToBusRepositoryTest() {
+  public void shouldCreateBus() {
     CreateBusRequest request = mock(CreateBusRequest.class);
 
     busService.createBus(request);

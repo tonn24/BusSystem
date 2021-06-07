@@ -39,13 +39,8 @@ public class TicketController {
 
   @DeleteMapping("/{id}")
   public void deleteTicketById(@PathVariable Long id) {
-    ticketService.deleteTicketById(id);
-  }
-
-  //TODO 50% Raha tagastamine ühendada deleteMappinguga
-  @GetMapping("/returnMoney/{id}")
-  public void returnMoneyToPassenger(@PathVariable Long id) {
     ticketService.returnMoneyToPassenger(id);
+    ticketService.deleteTicketById(id);
   }
 
   @GetMapping("/getSales/")

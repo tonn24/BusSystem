@@ -3,6 +3,7 @@ package com.example.demo.repository;
 import com.example.demo.domain.Bus;
 import com.example.demo.domain.create_requests.CreateBusRequest;
 import com.example.demo.repository.row_mappers.BusRowMapper;
+import java.math.BigDecimal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,9 +16,13 @@ public class BusRepository {
   private final JdbcTemplate jdbcTemplate;
 
   public Bus getBusById(Long id) {
-    String sql = "SELECT * FROM bus WHERE ID = ?";
 
-    return jdbcTemplate.query(sql, new BusRowMapper(), id).stream()
+    String joinBusAndBoxOfficeSql = "select bus.*, (bus.amount_of_seats - count(box_office.id)) as free_amount_of_seats "
+        + "from box_office "
+        + "left join bus on bus.id = box_office.bus_id where bus.id = ? group by bus.id ";
+
+
+    return jdbcTemplate.query(joinBusAndBoxOfficeSql, new BusRowMapper(), id).stream()
         .findFirst().orElse(null);
   }
 
@@ -31,11 +36,14 @@ public class BusRepository {
             request.getAmountOfSeats(), request.getPricePerKilometre(), request.getRouteLength());
   }
 
-  //TODO Joinida ticketi tabliga ja selle põhjal vaadata mitu ticketit on müüdud, et saada teada vabade kohtade arv.
+  //TODO Joinida ticketi tabeliga ja selle põhjal vaadata mitu ticketit on müüdud, et saada teada vabade kohtade arv.
   public List<Bus> findAllBuses() {
-    String sql = "select * from bus";
 
-    return jdbcTemplate.query(sql, new BusRowMapper());
+    String joinBusAndBoxOfficeSql = "select bus.*, (bus.amount_of_seats - count(box_office.id)) as free_amount_of_seats "
+        + "from box_office "
+        + "left join bus on bus.id = box_office.bus_id group by bus.id ";
+
+    return jdbcTemplate.query(joinBusAndBoxOfficeSql, new BusRowMapper());
   }
 
   public void deleteBus(Long id) {

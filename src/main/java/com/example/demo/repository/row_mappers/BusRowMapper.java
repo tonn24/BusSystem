@@ -16,6 +16,7 @@ public class BusRowMapper implements RowMapper<Bus> {
     bus.setAmountOfSeats(rs.getInt("amount_of_seats"));
     bus.setPricePerKilometre(rs.getBigDecimal("price_per_kilometre"));
     bus.setRouteLength(rs.getInt("route_length"));
+    bus.setFreeAmountOfSeats(rs.getInt("free_amount_of_seats"));
 
     return bus;
   }
