@@ -5,8 +5,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.example.demo.domain.Passenger;
+import com.example.demo.domain.Ticket;
 import com.example.demo.domain.create_requests.CreatePassengerRequest;
 import com.example.demo.repository.PassengerRepository;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,16 +24,16 @@ public class PassengerServiceTests {
   private static final Long passengerId = 2L;
 
   @Mock
-  Passenger passenger;
+  private Passenger passenger;
 
   @Mock
-  List<Passenger> passengers;
+  private List<Passenger> passengers;
 
   @Mock
-  PassengerRepository passengerRepository;
+  private PassengerRepository passengerRepository;
 
   @InjectMocks
-  PassengerService passengerService;
+  private PassengerService passengerService;
 
   @Test
   public void shouldGetPassengerById() {
@@ -58,8 +62,27 @@ public class PassengerServiceTests {
     verify(passengerRepository).createPassenger(request);
   }
 
-  @Test//TODO Tee test korda
+  @Test//TODO Tee test korda.
   public void shouldReturnMoneyToPassengers() {
+    Ticket ticket1 = new Ticket(1L, 1L, 2L, new BigDecimal("25.0"), LocalDateTime.now());
 
+    Passenger passenger1 = new Passenger(ticket1.getPassengerId(), "asgu2344", new BigDecimal("100.0"));
+
+    BigDecimal amountToBeRepaid = ticket1.getAmount().divide(new BigDecimal(2), 3, RoundingMode.CEILING);
+
+    passenger1.setMoney(passenger1.getMoney().add(amountToBeRepaid));
+
+    when(passengerRepository.getPassengerId(passenger1.getId())).thenReturn(passenger1);
+
+    passengerService.returnMoneyToPassenger(ticket1);
+
+    verify(passengerRepository).updatePassenger(passenger1);
+  }
+
+  @Test
+  public void deletePassengerById() {
+    passengerService.deletePassengerById(passengerId);
+
+    verify(passengerRepository).deletePassengerById(passengerId);
   }
 }

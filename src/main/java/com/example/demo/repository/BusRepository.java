@@ -3,7 +3,6 @@ package com.example.demo.repository;
 import com.example.demo.domain.Bus;
 import com.example.demo.domain.create_requests.CreateBusRequest;
 import com.example.demo.repository.row_mappers.BusRowMapper;
-import java.math.BigDecimal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,10 +16,10 @@ public class BusRepository {
 
   public Bus getBusById(Long id) {
 
-    String joinBusAndBoxOfficeSql = "select bus.*, (bus.amount_of_seats - count(box_office.id)) as free_amount_of_seats "
-        + "from box_office "
-        + "left join bus on bus.id = box_office.bus_id where bus.id = ? group by bus.id ";
-
+    String joinBusAndBoxOfficeSql =
+        "select bus.*, (bus.amount_of_seats - count(box_office.id)) as free_amount_of_seats "
+            + "from bus "
+            + "left join box_office on bus.id = box_office.bus_id where bus.id = ? group by bus.id ";
 
     return jdbcTemplate.query(joinBusAndBoxOfficeSql, new BusRowMapper(), id).stream()
         .findFirst().orElse(null);
@@ -36,12 +35,12 @@ public class BusRepository {
             request.getAmountOfSeats(), request.getPricePerKilometre(), request.getRouteLength());
   }
 
-  //TODO Joinida ticketi tabeliga ja selle põhjal vaadata mitu ticketit on müüdud, et saada teada vabade kohtade arv.
   public List<Bus> findAllBuses() {
 
-    String joinBusAndBoxOfficeSql = "select bus.*, (bus.amount_of_seats - count(box_office.id)) as free_amount_of_seats "
-        + "from box_office "
-        + "left join bus on bus.id = box_office.bus_id group by bus.id ";
+    String joinBusAndBoxOfficeSql =
+        "select bus.*, (bus.amount_of_seats - count(box_office.id)) as free_amount_of_seats "
+            + "from bus "
+            + "left join box_office on bus.id = box_office.bus_id group by bus.id ";
 
     return jdbcTemplate.query(joinBusAndBoxOfficeSql, new BusRowMapper());
   }
@@ -52,12 +51,5 @@ public class BusRepository {
     jdbcTemplate.update(sql, id);
 
     System.out.println("Bus with an id of " + id + " is deleted");
-  }
-
-  //TODO Võiks olla üldine update meetod
-  public void removeSeatFromBus(Long busId, Integer amountOfSeats) {
-    String sql = "update bus set amount_of_seats = ?  where id = ?";
-
-    jdbcTemplate.update(sql, amountOfSeats, busId);
   }
 }

@@ -1,7 +1,10 @@
 package com.example.demo.service;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import com.example.demo.domain.BusSales;
 import com.example.demo.domain.Bus;
 import com.example.demo.domain.Passenger;
 import com.example.demo.domain.Ticket;
@@ -12,6 +15,8 @@ import com.example.demo.repository.PassengerRepository;
 import com.example.demo.repository.TicketRepository;
 import com.example.demo.exceptions.NotEnoughMoneyException;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,25 +34,28 @@ public class TicketServiceTests {
   private BusService busService;
 
   @Mock
-  BusRepository busRepository;
+  private BusRepository busRepository;
 
   @Mock
-  PassengerRepository passengerRepository;
+  private PassengerRepository passengerRepository;
 
   @InjectMocks
-  TicketService ticketService;
+  private TicketService ticketService;
 
   @Mock
-  TicketRepository ticketRepository;
+  private PassengerService passengerService;
 
   @Mock
-  Ticket ticket;
+  private TicketRepository ticketRepository;
 
   @Mock
-  Passenger passenger;
+  private Ticket ticket;
 
   @Mock
-  List<Ticket> tickets;
+  private Passenger passenger;
+
+  @Mock
+  private List<Ticket> tickets;
 
   private final Bus bus = new Bus(busId, "asd345", "asd34", 50, new BigDecimal(0.2), 10, 0);
 
@@ -107,7 +115,7 @@ public class TicketServiceTests {
 
     ticketService.buyTicket(busId, passengerId);
 
-    assert(passenger.getMoney().equals(new BigDecimal(75)));
+    assert (passenger.getMoney().equals(new BigDecimal(75)));
   }
 
   @Test(expected = BusNotFoundException.class)
@@ -145,15 +153,22 @@ public class TicketServiceTests {
     verify(ticketRepository).getAllTickets();
   }
 
-  //TODO
   @Test
   public void shouldReturnMoneyToPassenger() {
+    Ticket ticket1 = new Ticket(1L, 1L, 2L, new BigDecimal("25.0"), LocalDateTime.now());
 
+    Passenger passenger1 = new Passenger(ticket1.getPassengerId(), "asgu2344",
+        new BigDecimal("100.0"));
+    when(ticketRepository.getTicketById(ticket1.getId())).thenReturn(ticket1);
+
+    ticketService.returnMoneyToPassenger(passenger1.getId());
+
+    verify(passengerService).returnMoneyToPassenger(ticket1);
   }
 
   @Test
   public void shouldReturnGetSales() {
-    when(ticketRepository.getSales()).thenReturn(new BigDecimal("129"));
+    when(ticketRepository.getSales()).thenReturn(new ArrayList<BusSales>());
 
     ticketService.getSales();
 
@@ -162,10 +177,17 @@ public class TicketServiceTests {
 
   @Test
   public void getSalesByBusId() {
-    when(ticketRepository.getSalesByBus(busId)).thenReturn(new BigDecimal(6.0));
+    when(ticketRepository.getSalesByBus(busId)).thenReturn(new BusSales());
 
     ticketService.getSalesByBusId(busId);
 
     verify(ticketRepository).getSalesByBus(busId);
+  }
+
+  @Test
+  public void shouldDeleteTicketById() {
+    ticketService.deleteTicketById(ticket.getId());
+
+    verify(ticketRepository).deleteTicketById(ticket.getId());
   }
 }

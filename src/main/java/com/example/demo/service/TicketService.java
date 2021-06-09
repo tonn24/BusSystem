@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.domain.BusSales;
 import com.example.demo.domain.Bus;
 import com.example.demo.domain.Passenger;
 import com.example.demo.domain.Ticket;
@@ -10,14 +11,15 @@ import com.example.demo.repository.BusRepository;
 import com.example.demo.repository.PassengerRepository;
 import com.example.demo.repository.TicketRepository;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class TicketService {
 
   private final TicketRepository ticketRepository;
@@ -63,7 +65,6 @@ public class TicketService {
     }
 
     bus.setAmountOfSeats(bus.getAmountOfSeats() - 1);
-    busRepository.removeSeatFromBus(busId, bus.getAmountOfSeats());
 
     passenger.setMoney(passenger.getMoney().subtract(ticketPrice));
     passengerRepository.updatePassenger(passenger);
@@ -72,15 +73,15 @@ public class TicketService {
     ticketRepository.createTicket(ticket);
 
     return ticketRepository
-        .getTicketPassengerIdAndBusId(ticket.getPassengerId(), ticket.getBusId(), ticket.getId());
+        .getTicketById(ticket.getId());
   }
 
-  public BigDecimal getSales() {
-    return ticketRepository.getSales().round(new MathContext(6));
+  public List<BusSales> getSales() {
+    return ticketRepository.getSales();
   }
 
-  public BigDecimal getSalesByBusId(Long busId) {
-    return ticketRepository.getSalesByBus(busId).round(new MathContext(5));
+  public BusSales getSalesByBusId(Long busId) {
+    return ticketRepository.getSalesByBus(busId);
   }
 
   public void returnMoneyToPassenger(Long id) {

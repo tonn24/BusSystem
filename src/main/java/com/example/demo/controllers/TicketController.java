@@ -1,7 +1,7 @@
 package com.example.demo.controllers;
+import com.example.demo.domain.BusSales;
 import com.example.demo.domain.Ticket;
 import com.example.demo.service.TicketService;
-import java.math.BigDecimal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,12 +44,12 @@ public class TicketController {
   }
 
   @GetMapping("/getSales/")
-  public BigDecimal getSales() {
+  public List<BusSales> getSales() {
     return ticketService.getSales();
   }
 
   @GetMapping("/getSales/{id}")
-  public BigDecimal getSalesByBusId(@PathVariable Long id) {
+  public BusSales getSalesByBusId(@PathVariable Long id) {
     return ticketService.getSalesByBusId(id);
   }
 }

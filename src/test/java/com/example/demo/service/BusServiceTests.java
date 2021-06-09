@@ -22,21 +22,22 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class BusServiceTests {
 
   @InjectMocks
-  BusService busService;
+  private BusService busService;
 
   @Mock
-  BusRepository busRepository;
+  private BusRepository busRepository;
 
   @Mock
-  Bus bus;
+  private Bus bus;
 
   @Mock
-  List<Bus> buses;
+  private List<Bus> buses;
 
   @Test
   public void getTicketPrice() {
 
     when(bus.getPricePerKilometre()).thenReturn(new BigDecimal(0.3));
+
     when(bus.getRouteLength()).thenReturn(20);
 
     MatcherAssert
@@ -53,7 +54,6 @@ public class BusServiceTests {
   }
 
   @Test
-  // TODO Kas test peaks olema lõpus või jääbki lihtsalt shouldFindBusById?
   public void shouldFindBusByIdTest() {
     when(busRepository.getBusById(1L)).thenReturn(bus);
 
@@ -62,13 +62,14 @@ public class BusServiceTests {
     verify(busRepository).getBusById(1L);
   }
 
-  @Test //TODO: Test on vaja lõpetada
+  @Test
   public void shouldDeleteBus() {
+    busService.deleteBus(bus.getId());
 
+    verify(busRepository).deleteBus(bus.getId());
   }
 
   @Test
-  //TODO Või hoopis should create bus?
   public void shouldCreateBus() {
     CreateBusRequest request = mock(CreateBusRequest.class);
 
@@ -78,7 +79,6 @@ public class BusServiceTests {
   }
 
   @Test
-  //TODO või findAllShouldMoveToBusRepository?
   public void shouldFindAllBuses() {
     when(busRepository.findAllBuses()).thenReturn(buses);
 

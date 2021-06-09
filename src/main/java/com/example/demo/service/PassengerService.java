@@ -9,9 +9,11 @@ import java.math.RoundingMode;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class PassengerService {
 
   private final PassengerRepository passengerRepository;
@@ -38,10 +40,13 @@ public class PassengerService {
   }
 
   public void returnMoneyToPassenger(Ticket ticket) {
-    BigDecimal amountToBeRepaid = ticket.getAmount().divide(new BigDecimal(2), 1, RoundingMode.CEILING);
+    BigDecimal amountToBeRepaid = ticket.getAmount()
+        .divide(new BigDecimal(2), 1, RoundingMode.CEILING);
 
     Passenger passenger = passengerRepository.getPassengerId(ticket.getPassengerId());
+
     passenger.setMoney(passenger.getMoney().add(amountToBeRepaid));
+
     passengerRepository.updatePassenger(passenger);
   }
 }
